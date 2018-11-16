@@ -1,3 +1,8 @@
+library(packrat)
+library(rgrass7)
+library(raster)
+library(rgdal)
+library(sp)
 #grass tools
 #utility for getting attribute tables from grass to a R data frame type
 #for use with v.select
