@@ -10,8 +10,15 @@ grassTableToDF=function(grassDF){
   return (read.table(text=grassDF,header=T,sep="|",stringsAsFactors = F))
 }
 
+addRasterIfAbsent=function(grassName,rasterPath){
+  if(!grassName %in% execGRASS("g.list",type="raster",intern = T)) {
+    execGRASS("r.in.gdal",input=rasterPath,output=grassName,flags="quiet")
+    print(paste0("raster '", grassName, "' added to GRASS"))
+  }
+}
+
 #initialize a re-useable workspace based on a raster.  Defaults set for RMNP area
-InitGrass_byRaster=function(rasterPath="C:/Users/sam/Documents/spatial/r_workspaces/findLakeInfluence/loggerSites/Inputs/BigDemWGS84.tif",grassRasterName="dem",grassPath="C:/Program Files/GRASS GIS 7.4.1"){
+InitGrass_byRaster=function(rasterPath="C:/Users/Sam/Documents/spatial/data/dem/leakyRivers/trim/LeakyRiversDEM_rectTrim_knobFix.tif",grassRasterName="dem",grassPath="C:/Program Files/GRASS GIS 7.4.1"){
   
   #'read' dem into R w/ rgdal
   #This doesnt actually load the raster into memory, but it will as needed
